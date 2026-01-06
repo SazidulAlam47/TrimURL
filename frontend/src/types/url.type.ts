@@ -4,4 +4,6 @@ export interface IShortUrl {
     user: string;
     clicks: number;
     shortUrl: string;
+    createdAt: string;
+    updatedAt: string;
 }

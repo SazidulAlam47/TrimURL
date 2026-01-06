@@ -11,6 +11,23 @@ const createShortUrl = async (
     originalUrl: string,
     baseUrl: string,
 ) => {
+    const user = await User.findOne({ email: decodedUser.email });
+    if (!user) {
+        throw new ApiError(status.NOT_FOUND, 'User not found');
+    }
+
+    const urlCount = await ShortUrl.countDocuments({
+        user: user._id,
+        isDeleted: false,
+    });
+
+    if (urlCount >= 100) {
+        throw new ApiError(
+            status.PAYMENT_REQUIRED,
+            'You have reached the maximum limit of 100 shortened URLs. Please upgrade your plan to create more URLs.',
+        );
+    }
+
     let shortId: string;
     let isExists: boolean;
 
@@ -20,11 +37,6 @@ const createShortUrl = async (
     } while (isExists);
 
     const shortUrl = `${baseUrl}/${shortId}`;
-
-    const user = await User.findOne({ email: decodedUser.email });
-    if (!user) {
-        throw new ApiError(status.NOT_FOUND, 'User not found');
-    }
 
     const payload = {
         shortId,
