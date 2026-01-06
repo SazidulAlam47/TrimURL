@@ -18,33 +18,40 @@ const CopyShortUrl = () => {
     };
 
     return (
-        <div className="w-full space-y-5">
-            <Input
-                value={shortLink}
-                readOnly
-                className="w-full bg-white/80 border-2 border-indigo-200 focus:border-indigo-400 transition"
-            />
-            <Button
-                className="w-full bg-gradient-to-r from-indigo-500 to-blue-400 hover:from-indigo-600 hover:to-blue-500 text-white font-semibold shadow-lg py-2 text-lg transition cursor-pointer"
-                onClick={handleCopy}
-            >
-                {copied ? (
-                    <>
-                        <GiCheckMark /> Copied!
-                    </>
-                ) : (
-                    <>
-                        <BsCopy /> Copy
-                    </>
-                )}
-            </Button>
-            <Button
-                className="w-full bg-gradient-to-r from-indigo-400 to-blue-300 hover:from-indigo-500 hover:to-blue-400 text-white hover:text-white font-semibold shadow-lg py-2 text-lg transition cursor-pointer"
-                variant="outline"
-                onClick={() => setShowCopy(false)}
-            >
-                Shorten Another Link
-            </Button>
+        <div className="w-full space-y-6">
+            <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">
+                    Your shortened URL:
+                </label>
+                <Input
+                    value={shortLink}
+                    readOnly
+                    className="w-full h-12 text-base bg-blue-50 border-blue-200"
+                />
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+                <Button
+                    className="flex-1 h-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base"
+                    onClick={handleCopy}
+                >
+                    {copied ? (
+                        <>
+                            <GiCheckMark className="mr-2" /> Copied!
+                        </>
+                    ) : (
+                        <>
+                            <BsCopy className="mr-2" /> Copy Link
+                        </>
+                    )}
+                </Button>
+                <Button
+                    className="flex-1 h-12 font-semibold text-base"
+                    variant="outline"
+                    onClick={() => setShowCopy(false)}
+                >
+                    Create Another
+                </Button>
+            </div>
         </div>
     );
 };

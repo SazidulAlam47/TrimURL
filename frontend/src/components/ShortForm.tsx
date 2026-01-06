@@ -41,18 +41,18 @@ const ShortForm = () => {
     };
 
     return (
-        <form className="w-full space-y-5" onSubmit={handleSubmit(onSubmit)}>
-            <div className="space-y-1.5">
+        <form className="w-full space-y-6" onSubmit={handleSubmit(onSubmit)}>
+            <div className="space-y-2">
                 <Input
-                    placeholder="Enter the link here"
-                    className="w-full bg-white/80 border-2 border-indigo-200 focus:border-indigo-400 transition"
+                    placeholder="Enter your long URL here..."
+                    className="w-full h-12 text-base"
                     {...register("url")}
                 />
                 <ErrorMessage message={errors.url?.message} />
             </div>
             <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-indigo-500 to-blue-400 hover:from-indigo-600 hover:to-blue-500 text-white font-semibold shadow-lg py-2 text-lg transition cursor-pointer"
+                className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg"
             >
                 Shorten URL
             </Button>

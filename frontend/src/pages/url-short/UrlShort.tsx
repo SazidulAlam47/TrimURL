@@ -1,4 +1,4 @@
-import { IoIosLink } from "react-icons/io";
+import { Link2 } from "lucide-react";
 import ShortForm from "../../components/ShortForm";
 import CopyShortUrl from "../../components/CopyShortUrl";
 import useUrlContext from "../../hooks/useUrlContext";
@@ -6,22 +6,27 @@ import useUrlContext from "../../hooks/useUrlContext";
 const UrlShort = () => {
     const { showCopy } = useUrlContext();
     return (
-        <div className="min-h-dvh flex items-center justify-center bg-linear-to-br from-indigo-400 via-blue-200 to-pink-100">
-            <div className="relative m-3 p-4 sm:p-6 md:p-8 bg-white/70 backdrop-blur-md shadow-2xl rounded-2xl w-full max-w-lg flex flex-col items-center border border-white/40">
-                {/* Link Icon */}
-                <div className="mb-4 bg-indigo-100 rounded-full p-3 shadow-md">
-                    <IoIosLink className="size-8 text-indigo-600" />
+        <section className="min-h-screen bg-linear-to-b from-blue-50 to-white py-20">
+            <div className="container mx-auto px-4">
+                <div className="max-w-2xl mx-auto">
+                    <div className="text-center mb-8">
+                        <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
+                            <Link2 className="w-8 h-8 text-blue-600" />
+                        </div>
+                        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                            Shorten Your URL
+                        </h1>
+                        <p className="text-xl text-gray-600">
+                            Paste your long URL below and get a short, shareable
+                            link instantly.
+                        </p>
+                    </div>
+                    <div className="bg-white rounded-lg shadow-lg p-8">
+                        {showCopy ? <CopyShortUrl /> : <ShortForm />}
+                    </div>
                 </div>
-                <h1 className="text-3xl md:text-4xl text-center font-extrabold mb-2 text-indigo-700 drop-shadow">
-                    Simple URL Shortener
-                </h1>
-                <p className="text-gray-600 mb-8 text-center text-md md:text-lg font-medium">
-                    Paste your long URL below and get a short, shareable link
-                    instantly.
-                </p>
-                {showCopy ? <CopyShortUrl /> : <ShortForm />}
             </div>
-        </div>
+        </section>
     );
 };
 
