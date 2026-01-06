@@ -33,7 +33,16 @@ const getMyAllUrls = catchAsync(async (req, res) => {
     const result = await UrlServices.getMyAllUrls(req.user, baseUrl);
     sendResponse(res, {
         statusCode: status.OK,
-        message: 'Urls fetched successfully',
+        message: 'URLs fetched successfully',
+        data: result,
+    });
+});
+
+const deleteMyUrlById = catchAsync(async (req, res) => {
+    const result = await UrlServices.deleteMyUrlById(req.user, req.params.id);
+    sendResponse(res, {
+        statusCode: status.OK,
+        message: 'URL deleted successfully',
         data: result,
     });
 });
@@ -43,4 +52,5 @@ export const UrlControllers = {
     redirectToOriginalUrl,
     redirectBaseUrlToClient,
     getMyAllUrls,
+    deleteMyUrlById,
 };

@@ -4,7 +4,7 @@ import { baseApi } from "../api/baseApi";
 
 const urlApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        createShortUrl: build.mutation<IShortUrl, any>({
+        createShortUrl: build.mutation<IShortUrl, Record<string, unknown>>({
             query: (data) => ({
                 url: "/url-shortener",
                 method: "POST",
@@ -19,7 +19,18 @@ const urlApi = baseApi.injectEndpoints({
             }),
             providesTags: ["url"],
         }),
+        deleteMyUrlById: build.mutation<IShortUrl, string>({
+            query: (id) => ({
+                url: `/url-shortener/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["url"],
+        }),
     }),
 });
 
-export const { useCreateShortUrlMutation, useGetMyAllUrlsQuery } = urlApi;
+export const {
+    useCreateShortUrlMutation,
+    useGetMyAllUrlsQuery,
+    useDeleteMyUrlByIdMutation,
+} = urlApi;

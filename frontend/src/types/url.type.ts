@@ -1,4 +1,5 @@
 export interface IShortUrl {
+    _id: string;
     shortId: string;
     originalUrl: string;
     user: string;

@@ -15,4 +15,6 @@ router.post(
     UrlControllers.createShortUrl,
 );
 
+router.delete('/:id', auth(), UrlControllers.deleteMyUrlById);
+
 export const UrlRoutes = router;

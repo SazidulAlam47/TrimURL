@@ -66,8 +66,12 @@ const redirectBaseUrlToClient = async () => {
 };
 
 const getMyAllUrls = async (decodedUser: TDecodedUser, baseUrl: string) => {
+    const user = await User.findOne({ email: decodedUser.email });
+    if (!user) {
+        throw new ApiError(status.NOT_FOUND, 'User not found');
+    }
     const urls = await ShortUrl.find({
-        user: decodedUser.id,
+        user: user._id,
         isDeleted: false,
     }).sort({
         createdAt: -1,
