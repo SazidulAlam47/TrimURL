@@ -8,6 +8,7 @@ const UrlShort = () => {
     const showCopy = useAppSelector((state: RootState) => state.url.showCopy);
     return (
         <section className="min-h-screen bg-linear-to-b from-blue-50 to-white py-20">
+            <title>Trim URL - Shorten Your URL</title>
             <div className="container mx-auto px-4">
                 <div className="max-w-2xl mx-auto">
                     <div className="text-center mb-8">

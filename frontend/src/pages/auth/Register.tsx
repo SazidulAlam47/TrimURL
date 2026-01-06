@@ -13,8 +13,6 @@ import {
     useLoginWithEmailMutation,
     useRegisterMutation,
 } from "@/redux/api/authApi";
-import { getUser } from "@/utils/user";
-import { useEffect } from "react";
 import type { IUser } from "@/types";
 import { uploadImageToCloudinary } from "@/utils/cloudinaryUpload";
 import { setToLocalStorage } from "@/utils/localStorage";
@@ -25,14 +23,6 @@ const Register = () => {
     const [register, { isLoading: isRegisterLoading }] = useRegisterMutation();
     const [loginWithEmail, { isLoading: isLoginLoading }] =
         useLoginWithEmailMutation();
-
-    const decodedUser = getUser();
-
-    useEffect(() => {
-        if (decodedUser) {
-            navigate("/");
-        }
-    }, [decodedUser, navigate]);
 
     const handleRegister = async (data: FieldValues) => {
         const newUser: Omit<IUser, "_id"> = {
@@ -56,7 +46,7 @@ const Register = () => {
                 const token = loginRes.accessToken;
                 if (token) {
                     setToLocalStorage(authKey, token);
-                    navigate("/");
+                    navigate("/url-shortener");
                     toast.success("Login successful!", { id: toastId });
                 }
             }

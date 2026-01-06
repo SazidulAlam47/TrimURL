@@ -8,26 +8,56 @@ import type { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/schema/auth.schema";
-import { useLoginWithEmailMutation } from "@/redux/api/authApi";
+import {
+    useLoginWithEmailMutation,
+    useLoginWithGoogleMutation,
+} from "@/redux/api/authApi";
 import { setToLocalStorage } from "@/utils/localStorage";
 import { authKey } from "@/constants/auth.constant";
-import { getUser } from "@/utils/user";
-import { useEffect } from "react";
+import googleLogo from "../../assets/google.svg";
+import formatFirebaseError from "@/utils/formatFirebaseError";
+import { googleLogin } from "@/firebase/firebase.action";
 
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [loginWithEmail, { isLoading }] = useLoginWithEmailMutation();
+    const [loginWithEmail, { isLoading: isEmailLoading }] =
+        useLoginWithEmailMutation();
+    const [loginWithGoogle, { isLoading: isGoogleLoading }] =
+        useLoginWithGoogleMutation();
 
-    const user = getUser();
+    const handleGoogleLogin = async () => {
+        try {
+            const userInfo = await googleLogin();
+            const idToken = await userInfo.user.getIdToken();
 
-    useEffect(() => {
-        if (user && !location.state) {
-            navigate("/");
+            const toastId = toast.loading("Logging in...");
+
+            try {
+                const res = await loginWithGoogle({ idToken }).unwrap();
+
+                const token = res.accessToken;
+                if (token) {
+                    setToLocalStorage(authKey, token);
+                    if (location.state) {
+                        navigate(location.state);
+                    } else {
+                        navigate("/url-shortener");
+                    }
+                    toast.success("Login successful!", { id: toastId });
+                }
+            } catch (error: any) {
+                toast.error(
+                    error.message || error.data || "Something went wrong",
+                    { id: toastId }
+                );
+            }
+        } catch (error: any) {
+            toast.error(formatFirebaseError(error.message));
         }
-    }, [user, navigate, location.state]);
+    };
 
-    const handleLogin = async (data: FieldValues) => {
+    const handleEmailLogin = async (data: FieldValues) => {
         const toastId = toast.loading("Logging in...");
 
         try {
@@ -38,7 +68,7 @@ const Login = () => {
                 if (location.state) {
                     navigate(location.state);
                 } else {
-                    navigate("/");
+                    navigate("/url-shortener");
                 }
                 toast.success("Login successful!", { id: toastId });
             }
@@ -64,7 +94,7 @@ const Login = () => {
                     </div>
                     <div className="bg-white rounded-lg shadow-lg p-8">
                         <SForm
-                            onSubmit={handleLogin}
+                            onSubmit={handleEmailLogin}
                             resolver={zodResolver(loginSchema)}
                         >
                             <SInput
@@ -73,22 +103,35 @@ const Login = () => {
                                 placeholder="Enter your email"
                             />
                             <SInputPassword />
-                            <div className="text-right">
-                                <Link
-                                    to="/forgot-password"
-                                    className="text-sm text-blue-600 hover:underline"
-                                >
-                                    Forgot password?
-                                </Link>
-                            </div>
                             <Button
                                 type="submit"
                                 className="w-full bg-blue-600 hover:bg-blue-700"
-                                disabled={isLoading}
+                                disabled={isEmailLoading || isGoogleLoading}
                             >
                                 Sign In
                             </Button>
                         </SForm>
+                        <div className="text-center mt-2">
+                            <Link
+                                to="/forgot-password"
+                                className="text-sm text-blue-600 hover:underline"
+                            >
+                                Forgot password
+                            </Link>
+                        </div>
+                        <Button
+                            onClick={handleGoogleLogin}
+                            variant="outline"
+                            className="w-full mt-4 border-blue-600 text-blue-600 hover:bg-blue-50"
+                            disabled={isEmailLoading || isGoogleLoading}
+                        >
+                            <img
+                                src={googleLogo}
+                                alt="G"
+                                className="size-4 mr-2"
+                            />
+                            Sign in with Google
+                        </Button>
                         <div className="text-center mt-4">
                             <span className="text-gray-600 text-sm">
                                 Don't have an account?{" "}

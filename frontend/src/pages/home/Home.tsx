@@ -6,6 +6,7 @@ import Stats from "./sections/Stats/Stats";
 const Home = () => {
     return (
         <>
+            <title>Trim URL</title>
             <Hero />
             <Features />
             <HowItWorks />

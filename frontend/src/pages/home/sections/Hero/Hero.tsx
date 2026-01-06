@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { getUser } from "@/utils/user";
 import { Link } from "react-router";
 
 const Hero = () => {
+    const user = getUser();
+
     return (
         <section className="bg-linear-to-b from-blue-50 to-white py-20">
             <div className="container mx-auto px-4">
@@ -18,23 +21,36 @@ const Hero = () => {
                         confidence.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Link to="/register">
-                            <Button
-                                size="lg"
-                                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg"
-                            >
-                                Get Started Free
-                            </Button>
-                        </Link>
-                        <Link to="/login">
-                            <Button
-                                size="lg"
-                                variant="outline"
-                                className="px-8 py-6 text-lg"
-                            >
-                                Sign In
-                            </Button>
-                        </Link>
+                        {user ? (
+                            <Link to="/url-shortener">
+                                <Button
+                                    size="lg"
+                                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg"
+                                >
+                                    Shorten Your URL
+                                </Button>
+                            </Link>
+                        ) : (
+                            <>
+                                <Link to="/register">
+                                    <Button
+                                        size="lg"
+                                        className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg"
+                                    >
+                                        Get Started Free
+                                    </Button>
+                                </Link>
+                                <Link to="/login">
+                                    <Button
+                                        size="lg"
+                                        variant="outline"
+                                        className="px-8 py-6 text-lg"
+                                    >
+                                        Sign In
+                                    </Button>
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

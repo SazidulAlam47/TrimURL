@@ -8,6 +8,7 @@ import ResetPass from "@/pages/auth/ResetPass";
 import ChangePass from "@/pages/auth/ChangePass";
 import SetPass from "@/pages/auth/SetPass";
 import { createBrowserRouter } from "react-router";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
     {
@@ -40,7 +41,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "url-shortener",
-                element: <UrlShort />,
+                element: (
+                    <ProtectedRoute>
+                        <UrlShort />
+                    </ProtectedRoute>
+                ),
             },
         ],
     },

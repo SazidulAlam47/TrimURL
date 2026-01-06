@@ -259,7 +259,7 @@ const forgetPassword = async (email: string) => {
             </div>
             <p>If you didn’t request this, you can safely ignore this email.</p>
             <p>Regards,</p>
-            <p><strong>StudyPilot</strong></p>
+            <p><strong>TrimURL</strong></p>
         </div>
         `;
 

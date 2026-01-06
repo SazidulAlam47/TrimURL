@@ -14,7 +14,7 @@ const sendEmail = async (to: string, subject: string, html: string) => {
         });
 
         await transporter.sendMail({
-            from: `"StudyPilot" <${config.node_mailer.email}>`,
+            from: `"TrimURL" <${config.node_mailer.email}>`,
             to,
             subject,
             html,

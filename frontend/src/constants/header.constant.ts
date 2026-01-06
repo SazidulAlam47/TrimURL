@@ -1,0 +1,10 @@
+export const headerLinks = [
+    {
+        path: "/",
+        title: "Home",
+    },
+    {
+        path: "/url-shortener",
+        title: "URL Shortener",
+    },
+];
