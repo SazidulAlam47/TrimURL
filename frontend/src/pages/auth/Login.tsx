@@ -17,8 +17,11 @@ import { authKey } from "@/constants/auth.constant";
 import googleLogo from "../../assets/google.svg";
 import formatFirebaseError from "@/utils/formatFirebaseError";
 import { googleLogin } from "@/firebase/firebase.action";
+import { useAppDispatch } from "@/redux/hooks";
+import { setIsLoggedIn } from "@/redux/features/authSlice";
 
 const Login = () => {
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const [loginWithEmail, { isLoading: isEmailLoading }] =
@@ -45,6 +48,7 @@ const Login = () => {
                         navigate("/url-shortener");
                     }
                     toast.success("Login successful!", { id: toastId });
+                    dispatch(setIsLoggedIn(true));
                 }
             } catch (error: any) {
                 toast.error(
@@ -71,6 +75,7 @@ const Login = () => {
                     navigate("/url-shortener");
                 }
                 toast.success("Login successful!", { id: toastId });
+                dispatch(setIsLoggedIn(true));
             }
         } catch (error: any) {
             toast.error(error.message || error.data || "Something went wrong", {

@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import logo from "@/assets/logo.png";
 
 const Footer = () => {
     return (
@@ -6,9 +7,7 @@ const Footer = () => {
             <div className="container mx-auto px-4">
                 <div className="flex flex-col items-center gap-4 py-6 md:flex-row md:justify-between">
                     <Link to="/" className="flex items-center">
-                        <span className="text-xl font-bold text-blue-600">
-                            TrimURL
-                        </span>
+                        <img src={logo} alt="logo" className="h-8 w-auto" />
                     </Link>
                     <div className="flex flex-wrap gap-6 justify-center">
                         <Link

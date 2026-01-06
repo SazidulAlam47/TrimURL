@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { getUser } from "@/utils/user";
+import { useAppSelector } from "@/redux/hooks";
+import type { RootState } from "@/redux/store";
 import { Link } from "react-router";
 
 const Hero = () => {
-    const user = getUser();
+    const isLoggedIn = useAppSelector(
+        (state: RootState) => state.auth.isLoggedIn
+    );
 
     return (
         <section className="bg-linear-to-b from-blue-50 to-white py-20">
@@ -21,7 +24,7 @@ const Hero = () => {
                         confidence.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        {user ? (
+                        {isLoggedIn ? (
                             <Link to="/url-shortener">
                                 <Button
                                     size="lg"

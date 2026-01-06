@@ -17,8 +17,11 @@ import type { IUser } from "@/types";
 import { uploadImageToCloudinary } from "@/utils/cloudinaryUpload";
 import { setToLocalStorage } from "@/utils/localStorage";
 import { authKey } from "@/constants/auth.constant";
+import { useAppDispatch } from "@/redux/hooks";
+import { setIsLoggedIn } from "@/redux/features/authSlice";
 
 const Register = () => {
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [register, { isLoading: isRegisterLoading }] = useRegisterMutation();
     const [loginWithEmail, { isLoading: isLoginLoading }] =
@@ -48,6 +51,7 @@ const Register = () => {
                     setToLocalStorage(authKey, token);
                     navigate("/url-shortener");
                     toast.success("Login successful!", { id: toastId });
+                    dispatch(setIsLoggedIn(true));
                 }
             }
         } catch (error: any) {

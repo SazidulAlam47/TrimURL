@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import urlReducer from "./features/urlSlice";
 import { baseApi } from "./api/baseApi";
+import urlReducer from "./features/urlSlice";
+import authReducer from "./features/authSlice";
 
 export const store = configureStore({
     reducer: {
         url: urlReducer,
+        auth: authReducer,
         [baseApi.reducerPath]: baseApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>

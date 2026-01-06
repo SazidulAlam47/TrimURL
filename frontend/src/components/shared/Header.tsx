@@ -14,14 +14,20 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { headerLinks } from "@/constants/header.constant";
 import { getUser, userLogout } from "@/utils/user";
 import { toast } from "sonner";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
+import logo from "@/assets/logo.png";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import type { RootState } from "@/redux/store";
+import { setIsLoggedIn } from "@/redux/features/authSlice";
 
 const Header = () => {
+    const isLoggedIn = useAppSelector(
+        (state: RootState) => state.auth.isLoggedIn
+    );
+    const dispatch = useAppDispatch();
     const user = getUser();
 
-    const [, forceUpdate] = useState({});
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -30,7 +36,7 @@ const Header = () => {
         try {
             await userLogout();
             toast.success("Logout successful!", { id: toastId });
-            forceUpdate({});
+            dispatch(setIsLoggedIn(false));
             navigate("/");
         } catch (error: any) {
             toast.error(error.message || error.data || "Something went wrong", {
@@ -45,9 +51,7 @@ const Header = () => {
                 <div className="container mx-auto px-4">
                     <div className="flex items-center justify-between py-4">
                         <Link to="/" className="flex items-center">
-                            <span className="text-2xl font-bold text-blue-600">
-                                TrimURL
-                            </span>
+                            <img src={logo} alt="logo" className="h-8 w-auto" />
                         </Link>
 
                         <div className="hidden md:flex items-center space-x-8">
@@ -70,7 +74,7 @@ const Header = () => {
                         </div>
 
                         <div className="flex items-center gap-2">
-                            {user ? (
+                            {isLoggedIn ? (
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Avatar className="cursor-pointer">
