@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
-import { TShortUrl } from './url.interface';
+import { IShortUrl } from './url.interface';
 
-const shortUrl = new Schema<TShortUrl>(
+const shortUrl = new Schema<IShortUrl>(
     {
         shortId: {
             type: String,
@@ -12,10 +12,19 @@ const shortUrl = new Schema<TShortUrl>(
             type: String,
             required: true,
         },
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+        },
+        clicks: {
+            type: Number,
+            default: 0,
+        },
     },
     {
         timestamps: true,
     },
 );
 
-export const ShortUrl = model<TShortUrl>('ShortUrl', shortUrl);
+export const ShortUrl = model<IShortUrl>('ShortUrl', shortUrl);

@@ -15,7 +15,7 @@ const moduleRoutes = [
         route: UserRoutes,
     },
     {
-        path: '/url',
+        path: '/url-shortener',
         route: UrlRoutes,
     },
 ];

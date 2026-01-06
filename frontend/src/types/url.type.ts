@@ -1,8 +1,7 @@
-import { Types } from 'mongoose';
-
 export interface IShortUrl {
     shortId: string;
     originalUrl: string;
-    user: Types.ObjectId;
+    user: string;
     clicks: number;
+    shortUrl?: string;
 }

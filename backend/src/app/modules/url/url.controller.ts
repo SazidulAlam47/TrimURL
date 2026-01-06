@@ -6,7 +6,11 @@ import getBaseUrl from '../../utils/getBaseUrl';
 
 const createShortUrl = catchAsync(async (req, res) => {
     const baseUrl = getBaseUrl(req);
-    const result = await UrlServices.createShortUrl(req.body.url, baseUrl);
+    const result = await UrlServices.createShortUrl(
+        req.user,
+        req.body.url,
+        baseUrl,
+    );
     sendResponse(res, {
         statusCode: status.CREATED,
         message: 'Short URL created successfully',
@@ -24,8 +28,19 @@ const redirectBaseUrlToClient = catchAsync(async (req, res) => {
     res.redirect(result);
 });
 
+const getMyAllUrls = catchAsync(async (req, res) => {
+    const baseUrl = getBaseUrl(req);
+    const result = await UrlServices.getMyAllUrls(req.user, baseUrl);
+    sendResponse(res, {
+        statusCode: status.OK,
+        message: 'Urls fetched successfully',
+        data: result,
+    });
+});
+
 export const UrlControllers = {
     createShortUrl,
     redirectToOriginalUrl,
     redirectBaseUrlToClient,
+    getMyAllUrls,
 };

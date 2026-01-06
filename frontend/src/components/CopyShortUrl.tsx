@@ -6,6 +6,7 @@ import { GiCheckMark } from "react-icons/gi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import type { RootState } from "@/redux/store";
 import { setShowCopy } from "@/redux/features/urlSlice";
+import { Label } from "./ui/label";
 
 const CopyShortUrl = () => {
     const shortLink = useAppSelector((state: RootState) => state.url.shortLink);
@@ -23,18 +24,18 @@ const CopyShortUrl = () => {
     return (
         <div className="w-full space-y-6">
             <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
+                <Label className="text-sm font-medium text-gray-700">
                     Your shortened URL:
-                </label>
+                </Label>
                 <Input
                     value={shortLink}
                     readOnly
-                    className="w-full h-12 text-base bg-blue-50 border-blue-200"
+                    className="w-full text-base bg-blue-50 border-blue-200"
                 />
             </div>
             <div className="flex flex-col sm:flex-row gap-3">
                 <Button
-                    className="flex-1 h-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base"
+                    className="flex-1 h-11 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base"
                     onClick={handleCopy}
                 >
                     {copied ? (
@@ -48,7 +49,7 @@ const CopyShortUrl = () => {
                     )}
                 </Button>
                 <Button
-                    className="flex-1 h-12 font-semibold text-base"
+                    className="flex-1 h-11 font-semibold text-base"
                     variant="outline"
                     onClick={() => dispatch(setShowCopy(false))}
                 >
