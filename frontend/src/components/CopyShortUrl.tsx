@@ -1,12 +1,15 @@
-import useUrlContext from "@/hooks/useUrlContext";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useState } from "react";
 import { BsCopy } from "react-icons/bs";
 import { GiCheckMark } from "react-icons/gi";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import type { RootState } from "@/redux/store";
+import { setShowCopy } from "@/redux/features/urlSlice";
 
 const CopyShortUrl = () => {
-    const { shortLink, setShowCopy } = useUrlContext();
+    const shortLink = useAppSelector((state: RootState) => state.url.shortLink);
+    const dispatch = useAppDispatch();
     const [copied, setCopied] = useState(false);
 
     const handleCopy = async () => {
@@ -47,7 +50,7 @@ const CopyShortUrl = () => {
                 <Button
                     className="flex-1 h-12 font-semibold text-base"
                     variant="outline"
-                    onClick={() => setShowCopy(false)}
+                    onClick={() => dispatch(setShowCopy(false))}
                 >
                     Create Another
                 </Button>

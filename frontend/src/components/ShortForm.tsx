@@ -5,16 +5,17 @@ import ErrorMessage from "./ErrorMessage";
 import { createShortUrlSchema } from "@/schema/url.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import useUrlContext from "@/hooks/useUrlContext";
 import type { TApiResponse } from "@/types/api.type";
 import toast from "react-hot-toast";
+import { useAppDispatch } from "@/redux/hooks";
+import { setShortLink, setShowCopy } from "@/redux/features/urlSlice";
 
 type Inputs = {
     url: string;
 };
 
 const ShortForm = () => {
-    const { setShortLink, setShowCopy } = useUrlContext();
+    const dispatch = useAppDispatch();
     const {
         register,
         handleSubmit,
@@ -29,8 +30,8 @@ const ShortForm = () => {
             const shortLink = result?.data?.shortUrl;
 
             if (shortLink) {
-                setShortLink(shortLink);
-                setShowCopy(true);
+                dispatch(setShortLink(shortLink));
+                dispatch(setShowCopy(true));
             } else {
                 toast.error("Something went wrong");
             }

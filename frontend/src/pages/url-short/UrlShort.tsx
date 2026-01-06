@@ -1,10 +1,11 @@
 import { Link2 } from "lucide-react";
 import ShortForm from "../../components/ShortForm";
 import CopyShortUrl from "../../components/CopyShortUrl";
-import useUrlContext from "../../hooks/useUrlContext";
+import type { RootState } from "@/redux/store";
+import { useAppSelector } from "@/redux/hooks";
 
 const UrlShort = () => {
-    const { showCopy } = useUrlContext();
+    const showCopy = useAppSelector((state: RootState) => state.url.showCopy);
     return (
         <section className="min-h-screen bg-linear-to-b from-blue-50 to-white py-20">
             <div className="container mx-auto px-4">
