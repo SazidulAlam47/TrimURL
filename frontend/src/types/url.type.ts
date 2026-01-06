@@ -3,5 +3,5 @@ export interface IShortUrl {
     originalUrl: string;
     user: string;
     clicks: number;
-    shortUrl?: string;
+    shortUrl: string;
 }

@@ -38,7 +38,7 @@ const createShortUrl = async (
 };
 
 const redirectToOriginalUrl = async (shortId: string) => {
-    const result = await ShortUrl.findOne({ shortId });
+    const result = await ShortUrl.findOne({ shortId, isDeleted: false });
 
     if (!result) {
         return config.client_url as string;
@@ -54,7 +54,10 @@ const redirectBaseUrlToClient = async () => {
 };
 
 const getMyAllUrls = async (decodedUser: TDecodedUser, baseUrl: string) => {
-    const urls = await ShortUrl.find({ user: decodedUser.id }).sort({
+    const urls = await ShortUrl.find({
+        user: decodedUser.id,
+        isDeleted: false,
+    }).sort({
         createdAt: -1,
     });
 
@@ -66,9 +69,34 @@ const getMyAllUrls = async (decodedUser: TDecodedUser, baseUrl: string) => {
     return urlsWithShortUrl;
 };
 
+const deleteMyUrlById = async (decodedUser: TDecodedUser, id: string) => {
+    const user = await User.findOne({ email: decodedUser.email });
+    if (!user) {
+        throw new ApiError(status.NOT_FOUND, 'User not found');
+    }
+    const url = await ShortUrl.findById(id);
+    if (!url) {
+        throw new ApiError(status.NOT_FOUND, 'URL not found');
+    }
+    if (url.isDeleted) {
+        throw new ApiError(status.NOT_FOUND, 'URL not found');
+    }
+    if (url.user.toString() !== user._id.toString()) {
+        throw new ApiError(status.FORBIDDEN, 'Forbidden Access');
+    }
+
+    const result = await ShortUrl.findByIdAndUpdate(
+        id,
+        { isDeleted: true },
+        { new: true },
+    );
+    return result;
+};
+
 export const UrlServices = {
     createShortUrl,
     redirectToOriginalUrl,
     redirectBaseUrlToClient,
     getMyAllUrls,
+    deleteMyUrlById,
 };

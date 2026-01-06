@@ -5,4 +5,5 @@ export interface IShortUrl {
     originalUrl: string;
     user: Types.ObjectId;
     clicks: number;
+    isDeleted: boolean;
 }

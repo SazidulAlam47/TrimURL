@@ -9,11 +9,14 @@ import ChangePass from "@/pages/auth/ChangePass";
 import SetPass from "@/pages/auth/SetPass";
 import { createBrowserRouter } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
+import ErrorPage from "@/pages/error-page/ErrorPage";
+import MyUrls from "@/pages/my-urls/MyUrls";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayout />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
@@ -44,6 +47,14 @@ const router = createBrowserRouter([
                 element: (
                     <ProtectedRoute>
                         <UrlShort />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: "my-urls",
+                element: (
+                    <ProtectedRoute>
+                        <MyUrls />
                     </ProtectedRoute>
                 ),
             },

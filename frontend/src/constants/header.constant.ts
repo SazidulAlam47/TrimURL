@@ -7,4 +7,8 @@ export const headerLinks = [
         path: "/url-shortener",
         title: "URL Shortener",
     },
+    {
+        path: "/my-urls",
+        title: "My URLs",
+    },
 ];
