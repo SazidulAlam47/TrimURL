@@ -114,7 +114,18 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+input.file-input::file-selector-button {
+  background: #374151;
+  color: #fff;
+  padding: 7px 12px;
+  margin-right: 10px;
+  border: none;
+  cursor: pointer;
 }

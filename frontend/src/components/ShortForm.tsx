@@ -5,8 +5,8 @@ import ErrorMessage from "./ErrorMessage";
 import { createShortUrlSchema } from "@/schema/url.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import type { TApiResponse } from "@/types/api.type";
-import toast from "react-hot-toast";
+import type { TApiResponse } from "@/types";
+import { toast } from "sonner";
 import { useAppDispatch } from "@/redux/hooks";
 import { setShortLink, setShowCopy } from "@/redux/features/urlSlice";
 

@@ -1,47 +1,38 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import SForm from "../../components/form/SForm";
 import SInput from "../../components/form/SInput";
-import SInputPassword from "../../components/form/SInputPassword";
 import type { FieldValues } from "react-hook-form";
-import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "@/schema/auth.schema";
-import { useLoginWithEmailMutation } from "@/redux/api/authApi";
-import { setToLocalStorage } from "@/utils/localStorage";
-import { authKey } from "@/constants/auth.constant";
+import { toast } from "sonner";
+import { forgotPasswordSchema } from "@/schema/auth.schema";
+import { useForgotPasswordMutation } from "@/redux/api/authApi";
 import { getUser } from "@/utils/user";
 import { useEffect } from "react";
 
-const Login = () => {
+const ForgotPass = () => {
     const navigate = useNavigate();
-    const location = useLocation();
-    const [loginWithEmail, { isLoading }] = useLoginWithEmailMutation();
+    const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
-    const user = getUser();
+    const decodedUser = getUser();
 
     useEffect(() => {
-        if (user && !location.state) {
+        if (decodedUser) {
             navigate("/");
         }
-    }, [user, navigate, location.state]);
+    }, [decodedUser, navigate]);
 
-    const handleLogin = async (data: FieldValues) => {
-        const toastId = toast.loading("Logging in...");
+    const handleForgotPassword = async (data: FieldValues) => {
+        const toastId = toast.loading("Sending reset email...");
 
         try {
-            const res = await loginWithEmail(data).unwrap();
-            const token = res.accessToken;
-            if (token) {
-                setToLocalStorage(authKey, token);
-                if (location.state) {
-                    navigate(location.state);
-                } else {
-                    navigate("/");
-                }
-                toast.success("Login successful!", { id: toastId });
-            }
+            await forgotPassword(data).unwrap();
+
+            toast.success("Password reset email sent successfully!", {
+                id: toastId,
+            });
+            navigate("/login");
         } catch (error: any) {
             toast.error(error.message || error.data || "Something went wrong", {
                 id: toastId,
@@ -51,52 +42,43 @@ const Login = () => {
 
     return (
         <section className="min-h-screen bg-linear-to-b from-blue-50 to-white py-20">
-            <title>TrimURL - Login</title>
+            <title>TrimURL - Forgot Password</title>
             <div className="container mx-auto px-4">
                 <div className="max-w-md mx-auto">
                     <div className="text-center mb-8">
                         <h1 className="text-4xl font-bold text-gray-900 mb-2">
-                            Welcome Back
+                            Forgot Password
                         </h1>
                         <p className="text-lg text-gray-600">
-                            Sign in to your account to continue
+                            Enter your email to receive a password reset link
                         </p>
                     </div>
                     <div className="bg-white rounded-lg shadow-lg p-8">
                         <SForm
-                            onSubmit={handleLogin}
-                            resolver={zodResolver(loginSchema)}
+                            onSubmit={handleForgotPassword}
+                            resolver={zodResolver(forgotPasswordSchema)}
                         >
                             <SInput
                                 name="email"
                                 label="Email"
                                 placeholder="Enter your email"
                             />
-                            <SInputPassword />
-                            <div className="text-right">
-                                <Link
-                                    to="/forgot-password"
-                                    className="text-sm text-blue-600 hover:underline"
-                                >
-                                    Forgot password?
-                                </Link>
-                            </div>
                             <Button
                                 type="submit"
                                 className="w-full bg-blue-600 hover:bg-blue-700"
                                 disabled={isLoading}
                             >
-                                Sign In
+                                Send Reset Link
                             </Button>
                         </SForm>
                         <div className="text-center mt-4">
                             <span className="text-gray-600 text-sm">
-                                Don't have an account?{" "}
+                                Remember your password?{" "}
                                 <Link
-                                    to="/register"
+                                    to="/login"
                                     className="text-blue-600 hover:underline font-medium"
                                 >
-                                    Create account
+                                    Sign in
                                 </Link>
                             </span>
                         </div>
@@ -107,4 +89,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default ForgotPass;
