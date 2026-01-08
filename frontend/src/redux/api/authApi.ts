@@ -10,7 +10,7 @@ const authApi = baseApi.injectEndpoints({
                 method: "POST",
                 data,
             }),
-            invalidatesTags: ["me"],
+            invalidatesTags: ["me", "url"],
         }),
         loginWithGoogle: build.mutation<ILogin, any>({
             query: (data) => ({
@@ -18,7 +18,7 @@ const authApi = baseApi.injectEndpoints({
                 method: "POST",
                 data,
             }),
-            invalidatesTags: ["me"],
+            invalidatesTags: ["me", "url"],
         }),
         register: build.mutation<IUser, any>({
             query: (data) => ({
@@ -26,7 +26,7 @@ const authApi = baseApi.injectEndpoints({
                 method: "POST",
                 data,
             }),
-            invalidatesTags: ["me"],
+            invalidatesTags: ["me", "url"],
         }),
         changePassword: build.mutation({
             query: (data) => ({

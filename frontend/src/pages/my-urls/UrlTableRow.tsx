@@ -62,7 +62,7 @@ const UrlTableRow = ({ url }: UrlTableRowProps) => {
                         rel="noopener noreferrer"
                         className="text-blue-600 hover:underline"
                     >
-                        {truncateUrl(url.shortUrl, 30)}
+                        {url.shortUrl}
                     </a>
                     <Button
                         variant="ghost"

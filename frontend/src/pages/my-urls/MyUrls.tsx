@@ -32,13 +32,15 @@ const MyUrls = () => {
                             Manage your shortened URLs
                         </p>
                     </div>
-                    <div>
-                        <Link to="/url-shortener">
-                            <Button className="bg-blue-600 hover:bg-blue-700 text-white mt-4">
-                                Create New Short URL
-                            </Button>
-                        </Link>
-                    </div>
+                    {!urls || !urls.length ? null : (
+                        <div>
+                            <Link to="/url-shortener">
+                                <Button className="bg-blue-600 hover:bg-blue-700 text-white mt-4">
+                                    Create New Short URL
+                                </Button>
+                            </Link>
+                        </div>
+                    )}
                 </div>
 
                 {urls && urls.length ? (

@@ -25,14 +25,25 @@ const Hero = () => {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         {isLoggedIn ? (
-                            <Link to="/url-shortener">
-                                <Button
-                                    size="lg"
-                                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg"
-                                >
-                                    Shorten Your URL
-                                </Button>
-                            </Link>
+                            <>
+                                <Link to="/url-shortener">
+                                    <Button
+                                        size="lg"
+                                        className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg"
+                                    >
+                                        URL Shortener
+                                    </Button>
+                                </Link>
+                                <Link to="/my-urls">
+                                    <Button
+                                        size="lg"
+                                        variant="outline"
+                                        className="px-8 py-6 text-lg"
+                                    >
+                                        My URLs
+                                    </Button>
+                                </Link>
+                            </>
                         ) : (
                             <>
                                 <Link to="/register">
