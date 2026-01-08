@@ -74,7 +74,7 @@ const Header = () => {
                         </div>
 
                         <div className="flex items-center gap-2">
-                            {isLoggedIn ? (
+                            {isLoggedIn && user ? (
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Avatar className="cursor-pointer">
