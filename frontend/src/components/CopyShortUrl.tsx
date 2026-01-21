@@ -22,7 +22,7 @@ const CopyShortUrl = () => {
     };
 
     return (
-        <div className="w-full space-y-6">
+        <div className="w-full space-y-4 md:space-y-6">
             <div className="space-y-2">
                 <Label className="text-sm font-medium text-gray-700">
                     Your shortened URL:
@@ -35,7 +35,7 @@ const CopyShortUrl = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-3">
                 <Button
-                    className="flex-1 h-11 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base"
+                    className="flex-1 h-10 md:h-11 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base"
                     onClick={handleCopy}
                 >
                     {copied ? (
@@ -49,7 +49,7 @@ const CopyShortUrl = () => {
                     )}
                 </Button>
                 <Button
-                    className="flex-1 h-11 font-semibold text-base"
+                    className="flex-1 h-10 md:h-11 font-semibold text-base"
                     variant="outline"
                     onClick={() => dispatch(setShowCopy(false))}
                 >

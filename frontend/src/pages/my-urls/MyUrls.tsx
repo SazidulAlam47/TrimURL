@@ -23,7 +23,7 @@ const MyUrls = () => {
         <section className="min-h-[calc(100dvh-190px)] bg-linear-to-b from-blue-50 to-white py-20">
             <title>TrimURL - My URLs</title>
             <div className="container mx-auto px-4">
-                <div className="mb-8 flex justify-between items-end">
+                <div className="mb-8 flex flex-col md:flex-row justify-between md:items-end">
                     <div>
                         <h1 className="text-4xl font-bold text-gray-900 mb-2">
                             My URLs

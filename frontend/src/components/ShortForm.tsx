@@ -40,7 +40,7 @@ const ShortForm = () => {
         <SForm
             onSubmit={onSubmit}
             resolver={zodResolver(createShortUrlSchema)}
-            className="w-full space-y-6"
+            className="w-full space-y-4 md:space-y-6"
         >
             <SInput
                 name="url"
@@ -49,7 +49,7 @@ const ShortForm = () => {
             />
             <Button
                 type="submit"
-                className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg"
+                className="w-full h-10 md:h-11 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg"
                 disabled={isLoading}
             >
                 Shorten URL

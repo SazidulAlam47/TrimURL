@@ -9,7 +9,7 @@ const UrlShort = () => {
     return (
         <section className="min-h-[calc(100dvh-190px)] bg-linear-to-b from-blue-50 to-white py-20">
             <title>Trim URL - Shorten Your URL</title>
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-2 sm:px-3 md:px-4">
                 <div className="max-w-2xl mx-auto">
                     <div className="text-center mb-8">
                         <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
@@ -23,7 +23,7 @@ const UrlShort = () => {
                             link instantly.
                         </p>
                     </div>
-                    <div className="bg-white rounded-lg shadow-lg p-8">
+                    <div className="bg-white rounded-lg shadow-lg px-3 py-4 sm:px-5 sm:py-6 md:p-8">
                         {showCopy ? <CopyShortUrl /> : <ShortForm />}
                     </div>
                 </div>
